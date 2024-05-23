@@ -2,6 +2,7 @@ import 'package:expence_manager/widegets/expenses_list.dart';
 import 'package:flutter/material.dart';
 
 import '../model/expence.dart';
+import '../widegets/add_new_expense.dart';
 
 class Expences extends StatefulWidget {
   const Expences({super.key});
@@ -33,7 +34,21 @@ class _ExpencesState extends State<Expences> {
     ),
   ];
 
+  // add new expence
+  void onAddNewExpence (ExpenceModel expence) {
+    setState(() {
+      _expensesList.add(expence);
+    });
+  }
+
   // funtion to open a model overlay
+  void _openAddExpencesOverlay() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return AddNewExpenses(onAddExpence: onAddNewExpence,);
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +63,11 @@ class _ExpencesState extends State<Expences> {
         actions: [
           Container(
             color: Colors.white,
-            child: IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+            child: IconButton(
+                onPressed:
+                  _openAddExpencesOverlay,
+
+                icon: const Icon(Icons.add)),
           )
         ],
       ),
