@@ -34,6 +34,16 @@ class _ExpencesState extends State<Expences> {
     ),
   ];
 
+  // funtion to open a model overlay
+  void _openAddExpencesOverlay() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return AddNewExpenses(
+            onAddExpence: onAddNewExpence,);
+        });
+  }
+
   // add new expence
   void onAddNewExpence (ExpenceModel expence) {
     setState(() {
@@ -41,14 +51,34 @@ class _ExpencesState extends State<Expences> {
     });
   }
 
-  // funtion to open a model overlay
-  void _openAddExpencesOverlay() {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return AddNewExpenses(onAddExpence: onAddNewExpence,);
-        });
+  // remove an expense
+  void onDeleteExpence(ExpenceModel expence) {
+    // store the deleted expense
+    ExpenceModel deletingExpence = expence;
+
+    // get the remove index
+    final int removingIndex = _expensesList.indexOf(expence);
+
+    setState(() {
+      _expensesList.remove(expence);
+    });
+
+    // show snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Delete Successful'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _expensesList.insert(removingIndex, deletingExpence);
+            });
+          },
+        ),
+      ),
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +104,7 @@ class _ExpencesState extends State<Expences> {
 
       body: Column(
         children: [
-          ExpensesList(expancesList: _expensesList,),
+          ExpensesList(expancesList: _expensesList, onDeleteExpence: onDeleteExpence,),
         ],
       ),
     );
