@@ -1,8 +1,21 @@
 import 'package:expence_manager/pages/expences_page.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+import 'model/expence.dart';
+import 'server/category_adpter.dart';
+
+void main() async {
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(ExpenceModelAdapter());
+  Hive.registerAdapter(CategoryAdpter());
+
+  await Hive.openBox('expenseDatabase');
+
   runApp(const MyApp());
+  
+
 }
 
 class MyApp extends StatelessWidget {
@@ -13,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: false),
       home: Expences(),
     );
   }
