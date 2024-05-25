@@ -5,7 +5,8 @@ import 'expence_tile.dart';
 
 class ExpensesList extends StatelessWidget {
   final List<ExpenceModel> expancesList;
-  const ExpensesList({super.key, required this.expancesList});
+  final void Function (ExpenceModel expence) onDeleteExpence;
+  const ExpensesList({super.key, required this.expancesList, required this.onDeleteExpence});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +16,15 @@ class ExpensesList extends StatelessWidget {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
-              child: ExpenceTile(
-                  expence: expancesList[index],
+              child: Dismissible(
+                key: ValueKey(expancesList[index]),
+                direction: DismissDirection.startToEnd,
+                onDismissed: (direction) {
+                  onDeleteExpence(expancesList[index]);
+                },
+                child: ExpenceTile(
+                    expence: expancesList[index],
+                ),
               ),
             );
           }),
