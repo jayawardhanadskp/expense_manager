@@ -50,13 +50,13 @@ class _AddNewExpensesState extends State<AddNewExpenses> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Enter valid Data'),
+              title: const Text('Enter valid Data'),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text('Close'))
+                    child: const Text('Close'))
               ],
             );
           });
@@ -85,7 +85,7 @@ class _AddNewExpensesState extends State<AddNewExpenses> {
           // Title
           TextField(
             controller: _titleController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Add new Title',
               labelText: 'Title',
             ),
@@ -99,11 +99,11 @@ class _AddNewExpensesState extends State<AddNewExpenses> {
               Expanded(
                 child: TextField(
                   controller: _amountController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter the amount',
                     labelText: 'Amount',
                   ),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
                   ],
@@ -120,7 +120,7 @@ class _AddNewExpensesState extends State<AddNewExpenses> {
                     ),
                     IconButton(
                       onPressed: _presentDatePicker,
-                      icon: Icon(Icons.date_range_outlined),
+                      icon: const Icon(Icons.date_range_outlined),
                     ),
                   ],
                 ),
@@ -158,15 +158,15 @@ class _AddNewExpensesState extends State<AddNewExpenses> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
                       ),
-                      child: Text('Close'),
+                      child: const Text('Close'),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     ElevatedButton(
                       onPressed: _handleFormSubmit,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                       ),
-                      child: Text('Save'),
+                      child: const Text('Save'),
                     ),
                   ],
                 ),
